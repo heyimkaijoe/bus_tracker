@@ -1,0 +1,2 @@
+class BusTrackingNotif < ApplicationRecord
+end
