@@ -1,2 +1,0 @@
-class BusTrackingNotif < ApplicationRecord
-end

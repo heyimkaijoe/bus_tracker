@@ -1,0 +1,27 @@
+<h1>Bus Tracker</h1>
+
+<%= form_with model: @subscriber do |form| %>
+  <div>
+    <%= form.label :phone %>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div>
+    <%= form.label :route %>
+    <%= form.text_field :route %>
+  </div>
+
+  <div>
+    <%= form.label :route_dir %>
+    <%= form.number_field :route_dir %>
+  </div>
+
+  <div>
+    <%= form.label :target_stop %>
+    <%= form.number_field :target_stop %>
+  </div>
+  <div>
+    <%= form.submit "Submit" %>
+  </div>
+<% end %>
+

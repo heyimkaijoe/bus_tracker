@@ -1,6 +1,6 @@
-class CreateBusTrackingNotifs < ActiveRecord::Migration[7.1]
+class CreateSubscribers < ActiveRecord::Migration[7.1]
   def change
-    create_table :bus_tracking_notifs do |t|
+    create_table :subscribers do |t|
       t.string :phone
       t.string :route
       t.boolean :route_dir

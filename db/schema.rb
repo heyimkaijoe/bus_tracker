@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_25_073818) do
-  create_table "bus_tracking_notifs", force: :cascade do |t|
+ActiveRecord::Schema[7.1].define(version: 2024_07_25_082934) do
+  create_table "subscribers", force: :cascade do |t|
     t.string "phone"
     t.string "route"
     t.boolean "route_dir"
