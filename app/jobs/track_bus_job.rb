@@ -3,9 +3,9 @@ class TrackBusJob < ApplicationJob
 
   def perform(subscriber)
     loop do
-      stops_before_bus_arrival_time_data = fetch_stops_before_bus_arrival_time(subscriber.route, "Direction eq #{subscriber.route_dir}")
-      if stops_before_bus_arrival_time_data["code"] = "200"
-        stops_before_bus_arrival_time = stops_before_bus_arrival_time_data["json"].filter { |stop| stop["StopName"]["Zh_tw"] == "三民健康路口(西松高中)" }.first["EstimateTime"]
+      bus_arrival_time_data = fetch_stops_before_bus_arrival_time(subscriber.route, "Direction eq #{subscriber.route_dir}")
+      if bus_arrival_time_data["code"] = "200"
+        stops_before_bus_arrival_time = bus_arrival_time_data["json"].filter { |stop| stop["StopName"]["Zh_tw"] == "三民健康路口(西松高中)" }.first["EstimateTime"]
 
         if stops_before_bus_arrival_time < 30
           send_notif(subscriber.phone, "#{subscriber.route}路線公車即將到達博仁醫院")
@@ -33,7 +33,7 @@ class TrackBusJob < ApplicationJob
     request = Net::HTTP::Get.new(uri)
     request["Accept"] = "application/json"
     request["X-Date"] = timestamp
-    request["Authorization"] = %Q(hmac username=\"#{ENV["TWILIO_ACCOUNT_SID"]}\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"#{hmac}\")
+    request["Authorization"] = %Q(hmac username=\"#{ENV["TDX_APP_ID"]}\", algorithm=\"hmac-sha1\", headers=\"x-date\", signature=\"#{hmac}\")
 
     req_options = {
       use_ssl: uri.scheme == "https",
@@ -50,12 +50,12 @@ class TrackBusJob < ApplicationJob
     Time.now.utc.strftime("%a, %d %b %Y %T GMT")
   end
 
-  def encode_by_hmac_sha1(token = ENV["TWILIO_AUTH_TOKEN"], value)
+  def encode_by_hmac_sha1(key = ENV["TDX_APP_KEY"], value)
     Base64.encode64(
       OpenSSL::HMAC.digest(
         OpenSSL::Digest.new("sha1"),
-        token,
-        value
+        key,
+        value,
       )
     ).strip
   end
