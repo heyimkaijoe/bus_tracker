@@ -20,7 +20,7 @@ class TrackBusJob < ApplicationJob
           url: "https://tdx.transportdata.tw/api/basic/v2/Bus/EstimatedTimeOfArrival/City/Taipei/#{route}?%24filter=Direction%20eq%20#{route_dir}&%24format=JSON",
         )
 
-        send_notif_if_stops_before_arrival_time_less_than_thirty_secs(subscriber.phone, route, target_stop_name, stops_before_target_stop_name, bus_arrival_time_data)
+        send_notif_if_bus_coming(subscriber.phone, route, target_stop_name, stops_before_target_stop_name, bus_arrival_time_data)
       end
 
       sleep(30)

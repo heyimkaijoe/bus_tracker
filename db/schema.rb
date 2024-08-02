@@ -21,3 +21,25 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_25_082934) do
   end
 
 end
+# subscribers table
+  # phone
+  # route_id
+  # route_dir
+  # target_stop_seq
+
+# routes table
+  # name
+  # is_順向
+
+# route_stops table
+  # route_id
+  # name
+  # seq
+
+  Subscriber.where("subscribers.route_id = ?", route.id)
+  select * from subscribers where subscribers.route_id = ?
+
+  select subscribers.* from subscribers
+  join route_stops on subscribers.route_id = route_stops.route_id
+  and route_stops.name = 博仁醫院
+  and subscribers.target_stop_seq = route_stops.seq;
